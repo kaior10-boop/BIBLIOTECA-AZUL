@@ -1,0 +1,319 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Biblioteca Azul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+  /* Layout: cabeçalho fixo, hero em duas colunas, vitrine em grade, passos, perguntas, rodapé. Azul e branco, página única. */
+  :root {
+    --white: #ffffff;
+    --blue-50: #f3f7ff;
+    --blue-100: #e3ecfd;
+    --blue-200: #c9daf8;
+    --blue-500: #2f6be0;
+    --blue-600: #1d55c9;
+    --blue-800: #12357a;
+    --blue-900: #0b2559;
+    --ink: #0e1d3d;
+    --muted: #4f6182;
+    --line: #d5e0f3;
+    --font-display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+    --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    padding-inline: 16px;
+  }
+  .wrap { max-width: 1060px; margin-inline: auto; }
+  h1, h2, h3 { font-family: var(--font-display); line-height: 1.12; margin: 0; text-wrap: balance; color: var(--blue-900); }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--blue-500); outline-offset: 3px; border-radius: 6px; }
+
+  /* Cabeçalho */
+  .top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+    margin-inline: -16px; padding-inline: 16px;
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 800; font-size: 20px; color: var(--blue-900); text-decoration: none; }
+  .brand-mark { width: 26px; height: 32px; background: var(--blue-600); border-radius: 3px 6px 6px 3px; position: relative; flex: none; }
+  .brand-mark::after { content: ""; position: absolute; left: 5px; top: 0; bottom: 0; width: 2px; background: var(--blue-200); opacity: .7; }
+  nav { display: flex; gap: 20px; align-items: center; }
+  nav a { text-decoration: none; font-weight: 500; color: var(--muted); }
+  nav a:hover { color: var(--blue-600); }
+  @media (max-width: 560px) { nav .hide-sm { display: none; } }
+
+  /* Botões */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--blue-600); color: var(--white);
+    font: 600 16px/1 var(--font-body);
+    padding: 14px 22px; border-radius: 10px; border: 0; text-decoration: none; cursor: pointer;
+    transition: background .15s;
+  }
+  .btn:hover { background: var(--blue-800); }
+  .btn.ghost { background: var(--white); color: var(--blue-600); box-shadow: inset 0 0 0 2px var(--blue-200); }
+  .btn.ghost:hover { background: var(--blue-50); }
+  .btn.small { padding: 11px 16px; font-size: 15px; }
+
+  /* Hero */
+  .hero { background: var(--blue-900); color: var(--white); margin-inline: -16px; padding-inline: 16px; }
+  .hero .wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 40px; align-items: center; padding-block: 64px; }
+  .hero h1 { color: var(--white); font-size: clamp(32px, 5.2vw, 52px); font-weight: 800; letter-spacing: -0.02em; }
+  .hero p.lead { margin-top: 18px; font-size: 18px; color: var(--blue-200); max-width: 46ch; }
+  .hero .actions { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero .btn { background: var(--white); color: var(--blue-900); }
+  .hero .btn:hover { background: var(--blue-100); }
+  .hero .btn.ghost { background: transparent; color: var(--white); box-shadow: inset 0 0 0 2px rgba(255,255,255,.35); }
+  .hero .btn.ghost:hover { background: rgba(255,255,255,.08); }
+  .facts { margin: 32px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px 22px; color: var(--blue-200); font-size: 15px; }
+  .facts li::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--blue-500); margin-right: 8px; }
+
+  .shelf { display: flex; justify-content: center; align-items: flex-end; gap: 0; min-width: 0; }
+  .shelf .cover { width: min(30%, 150px); flex: none; }
+  .shelf .cover:nth-child(1) { transform: rotate(-5deg) translateX(14px); }
+  .shelf .cover:nth-child(2) { width: min(36%, 180px); z-index: 1; }
+  .shelf .cover:nth-child(3) { transform: rotate(5deg) translateX(-14px); }
+  @media (max-width: 760px) {
+    .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 44px; }
+    .shelf { order: -1; }
+  }
+
+  /* Capas feitas em CSS */
+  .cover {
+    aspect-ratio: 3 / 4; max-width: 100%;
+    border-radius: 4px 10px 10px 4px;
+    padding: 14%;
+    display: flex; flex-direction: column; justify-content: space-between;
+    color: var(--white); position: relative; overflow: hidden;
+    box-shadow: 0 10px 24px rgba(11, 37, 89, .28);
+  }
+  .cover::before { content: ""; position: absolute; left: 6%; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,.25); }
+  .cover .c-kicker { font-size: clamp(8px, 1.2vw, 11px); letter-spacing: .14em; text-transform: uppercase; opacity: .8; font-weight: 600; }
+  .cover .c-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(14px, 2.3vw, 22px); line-height: 1.05; letter-spacing: -0.01em; }
+  .cover .c-shape { position: absolute; right: -18%; bottom: -12%; width: 70%; aspect-ratio: 1; border-radius: 50%; background: rgba(255,255,255,.12); }
+  .cover .c-shape.sq { border-radius: 14%; transform: rotate(18deg); }
+  .cover .c-shape.tri { border-radius: 0; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .t1 { background: linear-gradient(160deg, #2f6be0, #12357a); }
+  .t2 { background: linear-gradient(160deg, #1d55c9, #0b2559); }
+  .t3 { background: linear-gradient(160deg, #4b86ee, #1d55c9); }
+  .t4 { background: linear-gradient(160deg, #12357a, #0b2559); }
+  .t5 { background: linear-gradient(160deg, #3a77e8, #17449f); }
+  .t6 { background: linear-gradient(160deg, #1b4cb8, #0e2a66); }
+
+  /* Seções */
+  section { padding-block: 64px; }
+  .sec-head { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+  .sec-head .eyebrow { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600; color: var(--blue-600); }
+  .sec-head h2 { font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; letter-spacing: -0.015em; }
+  .sec-head p { color: var(--muted); max-width: 56ch; }
+
+  /* Vitrine */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 24px; }
+  .item { display: flex; gap: 18px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); min-width: 0; transition: border-color .15s, box-shadow .15s; }
+  .item:hover { border-color: var(--blue-200); box-shadow: 0 8px 22px rgba(18, 53, 122, .08); }
+  .item .cover { width: 104px; flex: none; align-self: flex-start; }
+  .item .info { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
+  .item h3 { font-size: 18px; font-weight: 700; }
+  .item .desc { color: var(--muted); font-size: 15px; }
+  .item .meta { font-size: 13px; color: var(--muted); }
+  .item .buy { margin-top: auto; padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .price { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--blue-900); font-variant-numeric: tabular-nums; }
+
+  /* Como funciona */
+  .steps-bg { background: var(--blue-50); margin-inline: -16px; padding-inline: 16px; }
+  .steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 20px; }
+  .steps li { counter-increment: s; background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; gap: 8px; }
+  .steps li::before { content: counter(s); width: 34px; height: 34px; border-radius: 50%; background: var(--blue-600); color: var(--white); display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; }
+  .steps h3 { font-size: 18px; }
+  .steps p { color: var(--muted); font-size: 15px; }
+
+  /* Perguntas */
+  .faq { display: flex; flex-direction: column; gap: 10px; max-width: 760px; }
+  details { border: 1px solid var(--line); border-radius: 12px; padding: 0 18px; background: var(--white); }
+  summary { cursor: pointer; padding: 16px 0; font-weight: 600; color: var(--blue-900); list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--blue-600); font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { padding-bottom: 16px; color: var(--muted); }
+
+  /* Rodapé */
+  footer { background: var(--blue-900); color: var(--blue-200); margin-inline: -16px; padding-inline: 16px; }
+  footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; font-size: 14px; }
+  footer strong { color: var(--white); font-family: var(--font-display); font-size: 18px; }
+
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#topo"><span class="brand-mark" aria-hidden="true"></span>Biblioteca Azul</a>
+    <nav aria-label="Principal">
+      <a class="hide-sm" href="#ebooks">Ebooks</a>
+      <a class="hide-sm" href="#como-funciona">Como funciona</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+  </div>
+</header>
+
+<main id="topo">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Ebooks diretos ao ponto, para você ler hoje.</h1>
+        <p class="lead">Guias curtos e práticos em PDF. Você paga, baixa na hora e lê no celular, no tablet ou no computador.</p>
+        <div class="actions">
+          <a class="btn" href="#ebooks">Ver ebooks</a>
+          <a class="btn ghost" href="#como-funciona">Como funciona</a>
+        </div>
+        <ul class="facts">
+          <li>Download imediato</li>
+          <li>Leitura em qualquer tela</li>
+          <li>7 dias de garantia</li>
+        </ul>
+      </div>
+      <div class="shelf" aria-hidden="true">
+        <div class="cover t1"><span class="c-kicker">Finanças</span><span class="c-title">Finanças do Zero</span><span class="c-shape"></span></div>
+        <div class="cover t2"><span class="c-kicker">Marketing</span><span class="c-title">Marketing Digital na Prática</span><span class="c-shape sq"></span></div>
+        <div class="cover t3"><span class="c-kicker">Rotina</span><span class="c-title">Foco em 21 Dias</span><span class="c-shape tri"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="ebooks">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Catálogo</span>
+        <h2>Escolha seu ebook</h2>
+        <p>Cada título resolve um assunto. Sem enrolação, com exemplos e passo a passo.</p>
+      </div>
+      <div class="grid">
+
+        <article class="item">
+          <div class="cover t1"><span class="c-kicker">Finanças</span><span class="c-title">Finanças do Zero</span><span class="c-shape"></span></div>
+          <div class="info">
+            <h3>Finanças do Zero</h3>
+            <p class="desc">Monte seu orçamento, quite dívidas e comece a guardar dinheiro.</p>
+            <p class="meta">PDF · 84 páginas</p>
+            <div class="buy"><span class="price">R$ 29,90</span><a class="btn small" href="#" data-ebook="Finanças do Zero">Comprar</a></div>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="cover t2"><span class="c-kicker">Marketing</span><span class="c-title">Marketing Digital na Prática</span><span class="c-shape sq"></span></div>
+          <div class="info">
+            <h3>Marketing Digital na Prática</h3>
+            <p class="desc">Atraia clientes com redes sociais e anúncios, mesmo com pouco orçamento.</p>
+            <p class="meta">PDF · 112 páginas</p>
+            <div class="buy"><span class="price">R$ 39,90</span><a class="btn small" href="#" data-ebook="Marketing Digital na Prática">Comprar</a></div>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="cover t3"><span class="c-kicker">Rotina</span><span class="c-title">Foco em 21 Dias</span><span class="c-shape tri"></span></div>
+          <div class="info">
+            <h3>Foco em 21 Dias</h3>
+            <p class="desc">Um plano diário para criar hábitos e organizar suas tarefas.</p>
+            <p class="meta">PDF · 64 páginas</p>
+            <div class="buy"><span class="price">R$ 24,90</span><a class="btn small" href="#" data-ebook="Foco em 21 Dias">Comprar</a></div>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="cover t4"><span class="c-kicker">Idiomas</span><span class="c-title">Inglês para Viagem</span><span class="c-shape"></span></div>
+          <div class="info">
+            <h3>Inglês para Viagem</h3>
+            <p class="desc">Frases essenciais para aeroporto, hotel, restaurante e passeios.</p>
+            <p class="meta">PDF · 56 páginas</p>
+            <div class="buy"><span class="price">R$ 19,90</span><a class="btn small" href="#" data-ebook="Inglês para Viagem">Comprar</a></div>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="cover t5"><span class="c-kicker">Planilhas</span><span class="c-title">Excel do Básico ao Útil</span><span class="c-shape sq"></span></div>
+          <div class="info">
+            <h3>Excel do Básico ao Útil</h3>
+            <p class="desc">Fórmulas, tabelas e gráficos para usar no trabalho já na primeira semana.</p>
+            <p class="meta">PDF · 96 páginas</p>
+            <div class="buy"><span class="price">R$ 34,90</span><a class="btn small" href="#" data-ebook="Excel do Básico ao Útil">Comprar</a></div>
+          </div>
+        </article>
+
+        <article class="item">
+          <div class="cover t6"><span class="c-kicker">Receitas</span><span class="c-title">Marmitas Fit da Semana</span><span class="c-shape tri"></span></div>
+          <div class="info">
+            <h3>Marmitas Fit da Semana</h3>
+            <p class="desc">Cardápio de 7 dias com lista de compras e preparo em uma tarde.</p>
+            <p class="meta">PDF · 72 páginas</p>
+            <div class="buy"><span class="price">R$ 27,90</span><a class="btn small" href="#" data-ebook="Marmitas Fit da Semana">Comprar</a></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="steps-bg">
+    <section id="como-funciona">
+      <div class="wrap">
+        <div class="sec-head">
+          <span class="eyebrow">Como funciona</span>
+          <h2>Da compra à leitura em minutos</h2>
+        </div>
+        <ol class="steps">
+          <li><h3>Escolha e compre</h3><p>Clique em comprar no ebook que quiser e pague por Pix ou cartão.</p></li>
+          <li><h3>Receba o link</h3><p>Assim que o pagamento é confirmado, o link de download chega no seu e-mail.</p></li>
+          <li><h3>Baixe e leia</h3><p>O PDF abre em qualquer celular, tablet ou computador, e fica seu para sempre.</p></li>
+        </ol>
+      </div>
+    </section>
+  </div>
+
+  <section id="duvidas">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Dúvidas</span>
+        <h2>Perguntas frequentes</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Em que formato recebo o ebook?</summary>
+          <p>Em PDF, que abre em qualquer aparelho sem precisar instalar nada além de um leitor de PDF.</p>
+        </details>
+        <details>
+          <summary>Quanto tempo leva para receber?</summary>
+          <p>O link de download é enviado por e-mail logo após a confirmação do pagamento. No Pix, costuma levar poucos minutos.</p>
+        </details>
+        <details>
+          <summary>Posso pedir reembolso?</summary>
+          <p>Sim. Você tem 7 dias após a compra para pedir o dinheiro de volta, sem perguntas.</p>
+        </details>
+        <details>
+          <summary>Posso ler em mais de um aparelho?</summary>
+          <p>Pode. O arquivo é seu, então você baixa e abre no celular, no tablet e no computador.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong>Biblioteca Azul</strong>
+    <span>© 2026 Biblioteca Azul. Todos os direitos reservados.</span>
+  </div>
+</footer>
+
+</body></html>
